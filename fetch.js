@@ -105,6 +105,7 @@ if (MEDIUM_USERNAME !== undefined) {
     method: "GET"
   };
 
+  console.log(encodedMediumUsername);
   const req = https.request(options, res => {
     let mediumData = "";
 
