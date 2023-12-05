@@ -1,4 +1,4 @@
-fs = require("fs");
+const fs = require("fs");
 const https = require("https");
 process = require("process");
 require("dotenv").config();
@@ -16,6 +16,7 @@ const ERR = {
   requestFailedMedium:
     "The request to Medium didn't succeed. Check if Medium username in your .env file is correct."
 };
+
 if (USE_GITHUB_DATA === "true") {
   if (GITHUB_USERNAME === undefined) {
     throw new Error(ERR.noUserName);
@@ -102,13 +103,14 @@ if (MEDIUM_USERNAME !== undefined) {
     path: `/v1/api.json?rss_url=https://medium.com/feed/@${encodedMediumUsername}`,
     port: 443,
     method: "GET"
+  };
 
   const req = https.request(options, res => {
     let mediumData = "";
 
     console.log(`statusCode: ${res.statusCode}`);
     if (res.statusCode !== 200) {
-      throw new Error(ERR.requestMediumFailed);
+      throw new Error(ERR.requestFailedMedium);
     }
 
     res.on("data", d => {
@@ -128,3 +130,4 @@ if (MEDIUM_USERNAME !== undefined) {
 
   req.end();
 }
+
