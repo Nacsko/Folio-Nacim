@@ -96,12 +96,12 @@ if (USE_GITHUB_DATA === "true") {
 
 if (MEDIUM_USERNAME !== undefined) {
   console.log(`Fetching Medium blogs data for ${MEDIUM_USERNAME}`);
+  const encodedMediumUsername = encodeURIComponent(MEDIUM_USERNAME);
   const options = {
     hostname: "api.rss2json.com",
-    path: `/v1/api.json?rss_url=https://medium.com/feed/@${MEDIUM_USERNAME}`,
+    path: `/v1/api.json?rss_url=https://medium.com/feed/@${encodedMediumUsername}`,
     port: 443,
     method: "GET"
-  };
 
   const req = https.request(options, res => {
     let mediumData = "";
